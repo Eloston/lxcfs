@@ -3,11 +3,7 @@
 
 include /usr/share/dpkg/default.mk
 
-ifeq ($(DEB_VENDOR),Ubuntu)
-	LXCFS_DEPENDS="systemd | cgroup-lite | cgroupfs-mount"
-else
-	LXCFS_DEPENDS="systemd | cgroupfs-mount"
-endif
+LXCFS_DEPENDS="systemd | cgroupfs-mount"
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
@@ -29,12 +25,8 @@ override_dh_install:
 	dh_install
 
 override_dh_installinit:
-ifeq (,$(findstring $(DEB_DISTRIBUTION), trusty xenial))
 	rm -f debian/tmp/etc/init/lxcfs.conf
-	echo 'rm_conffile /etc/init/lxcfs.conf 2.0.7-0ubuntu5~' >> debian/lxcfs.maintscript
-else
-	cp debian/tmp/etc/init/lxcfs.conf debian/lxcfs.upstart
-endif
+	echo 'rm_conffile /etc/init/lxcfs.conf 1:2.0.7' >> debian/lxcfs.maintscript
 	cp debian/tmp/etc/rc.d/init.d/lxcfs debian/lxcfs.init
 	dh_installinit -p lxcfs --no-restart-on-upgrade
 
