@@ -1,0 +1,576 @@
+lxcfs (3.0.0-0ubuntu1) bionic; urgency=medium
+
+  * New upstream LTS release:
+    - LXCFS 3.0 will be supported until June 2023.
+    - Announcement: https://linuxcontainers.org/lxcfs/news/
+
+  * Drop all patches, now upstream.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 26 Mar 2018 23:25:21 -0400
+
+lxcfs (3.0.0~beta1-0ubuntu2) bionic; urgency=medium
+
+  * Cherry-pick fix for s390x autopkgtest.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 02 Mar 2018 17:14:48 -0500
+
+lxcfs (3.0.0~beta1-0ubuntu1) bionic; urgency=medium
+
+  * New upstream beta (3.0.0~beta1)
+  * Remove the libpam-cgfs package, now provided by the lxc source.
+  * Bump standards to 4.1.3
+    - Require debhelper >= 10
+    - Bump compat to 10
+    - Drop build-dependency on dh-autoreconf and autotools-dev
+    - Use https URLs in copyright
+    - Drop --with autotools_dev from rules
+    - Update lintian overrides
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 01 Mar 2018 13:05:54 -0500
+
+lxcfs (2.0.8-1ubuntu2) bionic; urgency=medium
+
+  * Add symlink from /usr/lib/HOST-ARCH/lxcfs to /usr/lib/lxcfs.
+    This is needed so that an already running lxcfs daemon can properly
+    reload the internal lxcfs library on upgrade.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 08 Nov 2017 16:47:15 -0500
+
+lxcfs (2.0.8-1ubuntu1) bionic; urgency=medium
+
+  * Re-sync with Debian, remaining delta (for backports):
+    - Include upstart jobs on older Ubuntu releases
+    - Build-depend on dh-systemd with older debootstrap
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 31 Oct 2017 18:40:42 -0400
+
+lxcfs (2.0.8-1) unstable; urgency=medium
+
+  * New upstream version 2.0.8
+  * drop patches, all were applied upstream
+  * use dh-systemd from debhelper, not the standalone package
+  * lxcfs.so is now properly installed by the makefile
+  * drop upstart support
+  * Standards-Version: 4.1.1
+
+ -- Evgeni Golov <evgeni@debian.org>  Sat, 21 Oct 2017 15:46:57 +0200
+
+lxcfs (2.0.7-2) unstable; urgency=medium
+
+  * import patches from the upstream stable branch
+    + 0002-pam-report-back-we-found-the-unified-hierarchy.patch
+      0003-bindings-add-mountpoint-for-unified-hierarchy.patch
+      Closes: #843450
+    + 0004-pam-chown-cgroup.procs-file-on-unified-hierarchy.patch
+      Closes: #867619
+    + 0005-bindings-calculate-uptime-via-proc-pid-stat.patch
+      0006-bindings-calculate-btime-correctly.patch
+      0007-tests-fix-invalid-comparison.patch
+      0008-temporarily-revert-the-virtualization-of-btime-field.patch
+      These have no Debian bugs, but improve the uptime and btime handling.
+    + 0010-add-cgroupfs-mount-to-Should-Start-Stop-sysvinit-LSB.patch
+      Closes: #859220
+  * add 0001-pam-non-functional-changes, otherwise 0004 won't apply
+
+ -- Evgeni Golov <evgeni@debian.org>  Sun, 16 Jul 2017 15:04:34 +0200
+
+lxcfs (2.0.7-1) unstable; urgency=medium
+
+  * New upstream version 2.0.7
+    + virtualize the 'btime' field of /proc/stat
+      LP: #1654310
+
+ -- Evgeni Golov <evgeni@debian.org>  Sat, 20 May 2017 11:00:52 +0200
+
+lxcfs (2.0.6-1) unstable; urgency=medium
+
+  * New upstream version 2.0.6
+
+ -- Evgeni Golov <evgeni@debian.org>  Tue, 24 Jan 2017 12:38:18 +0100
+
+lxcfs (2.0.5-1) unstable; urgency=medium
+
+  * New upstream version 2.0.5
+  * drop installing libattr1-dev during tests, it's already installed as B-D
+  * only reboot if the memory cgroup is not enabled yet
+  * dynamically generate depends on a cgroup mounter depending on vendor
+
+ -- Evgeni Golov <evgeni@debian.org>  Thu, 24 Nov 2016 08:30:55 +0100
+
+lxcfs (2.0.4-1) unstable; urgency=medium
+
+  * New upstream version 2.0.4
+  * drop patches from upstream
+  * use @builddeps@ instead of apt-get build-dep
+  * add Depends on lsb-base, thanks lintian
+
+ -- Evgeni Golov <evgeni@debian.org>  Sat, 08 Oct 2016 14:29:11 +0200
+
+lxcfs (2.0.3-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.3
+  * Cherry-pick upstream bugfix to fix autopkgtests
+  * make autopkgtests work on Debian
+
+ -- Evgeni Golov <evgeni@debian.org>  Thu, 25 Aug 2016 21:18:20 +0200
+
+lxcfs (2.0.2-1) unstable; urgency=medium
+
+  * wrap too long changelog line
+  * Imported Upstream version 2.0.2
+  * drop patches, they are included in the new release
+  * drop lintian-overrides, we do not need them anymore
+
+ -- Evgeni Golov <evgeni@debian.org>  Sat, 16 Jul 2016 12:48:58 +0200
+
+lxcfs (2.0.1-2) unstable; urgency=medium
+
+  * libpam_cgfs: don't create new path if we are under
+    /user.slice/user-$uid.slice
+  * under_systemd_user_slice: work right when init is in '/'
+  * The above two patches together: Closes: #826260
+
+ -- Evgeni Golov <evgeni@debian.org>  Fri, 24 Jun 2016 21:46:36 +0200
+
+lxcfs (2.0.1-1) unstable; urgency=medium
+
+  * add gbp.conf
+  * Imported Upstream version 2.0.1
+  * drop all patches, they were all pulled from upstream
+
+ -- Evgeni Golov <evgeni@debian.org>  Sun, 22 May 2016 22:06:28 +0200
+
+lxcfs (2.0.0-3) unstable; urgency=medium
+
+  [ Serge Hallyn ]
+  * Add optional dependency on cgroupfs-mount
+
+  [ Evgeni Golov ]
+  * split fix-access-to-cgroup-directories.patch to match upstream commits
+  * Cherrypick upstream patches to fix cpuinfo on s390x. (LP: #1564831)
+  * require isolation-machine to run; the tests can't run under lxc themselves
+
+ -- Evgeni Golov <evgeni@debian.org>  Thu, 28 Apr 2016 19:52:03 +0200
+
+lxcfs (2.0.0-2) unstable; urgency=medium
+
+  * update d/watch to properly mangle upstream beta and rc releases
+  * Standards-Version: 3.9.8
+  * drop alternative cgroup-lite dependency, we don't ship that in debian
+  * lxcfs is only usable on Linux so mark the package as linux-any
+  * add build-depends on linux-libc-dev
+  * backport upstream patch for accessing cgroup dirs (Closes: #820428)
+
+ -- Evgeni Golov <evgeni@debian.org>  Thu, 21 Apr 2016 22:44:48 +0200
+
+lxcfs (2.0.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Set Maintainer to pkg-lxc, adnan and me as Uploaders
+
+ -- Evgeni Golov <evgeni@debian.org>  Sun, 03 Apr 2016 15:20:20 +0200
+
+lxcfs (2.0.0~rc8-1) unstable; urgency=medium
+
+  * Initial Debian package release (closes: 775021)
+  * Included fix for build failure due to broken link for "liblxcfs.so.0"
+
+ -- Adnan Hodzic <adnan@hodzic.org>  Tue, 22 Mar 2016 18:34:18 +0100
+
+lxcfs (2.0.0~rc8-0ubuntu1) xenial; urgency=medium
+
+  * Merge 2.0.0.rc8, which implements access(2) needed by lxc.
+    (LP: #1560120)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 21 Mar 2016 21:08:18 -0700
+
+lxcfs (2.0.0~rc6-0ubuntu3) xenial; urgency=medium
+
+  * Don't call mountpoint when we already know it's a mount point.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Sun, 20 Mar 2016 11:03:20 -0400
+
+lxcfs (2.0.0~rc6-0ubuntu2) xenial; urgency=medium
+
+  * Cherry-pick tentative upstream fix for the mount hook. (LP: #1559169)
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 18 Mar 2016 23:29:21 -0400
+
+lxcfs (2.0.0~rc6-0ubuntu1) xenial; urgency=medium
+
+  * Merge next upstream rc
+  * This handles the same case as the previous release, but in 14.04
+    desktops, where a different cgroup name template is used.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 17 Mar 2016 14:53:21 -0700
+
+lxcfs (2.0.0~rc5-0ubuntu1) xenial; urgency=medium
+
+  * Merge next upstream rc
+  * This fixes a bug where sudo would mis-chown a user's systemd cgroup
+    (LP: #1556447)
+  * Drop upstream paches which are in this rc
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 14 Mar 2016 16:09:50 -0700
+
+lxcfs (2.0.0~rc4-0ubuntu1) xenial; urgency=medium
+
+  * Merge next upstream release candidate
+  * switch to the upstream init scripts
+  * Cherrypick upstream patch to not put systemd config files under /usr.
+  * Cherrypick upstream patch to install sysvinit job
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 11 Mar 2016 22:32:28 -0800
+
+lxcfs (2.0.0~rc3-0ubuntu1) xenial; urgency=medium
+
+  * Merge upstream release candidate, including fixes for missing lxcfs
+    proc files in some containers.
+  * pam config: run in noninteractive sessions as well (LP: #1554269)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 07 Mar 2016 16:22:18 -0800
+
+lxcfs (2.0.0~rc2-0ubuntu2) xenial; urgency=medium
+
+  * postinst: don't fail if lxcfs.pid was wrong causing kill -USR1 to fail.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 04 Mar 2016 20:01:51 -0800
+
+lxcfs (2.0.0~rc2-0ubuntu1) xenial; urgency=medium
+
+  * Merge second upstream release candidate.  No meaningful changes from beta2.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Wed, 24 Feb 2016 13:38:28 -0800
+
+lxcfs (2.0.0~beta2-0ubuntu1) xenial; urgency=medium
+
+  * Merge upstrea 2.0.0.beta2
+  * Includes a fix for libpam-lxcfs hanging when there are unmounted
+    controllers (making logins impossible).
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 19 Feb 2016 12:47:07 -0800
+
+lxcfs (2.0.0~beta1-0ubuntu1) xenial; urgency=medium
+
+  * Merge upstrea 2.0.0.beta1
+  * debian/pam-cgfs.config: add name=systemd to the controller list.
+  * debian/tests/exercise: set cpuset clone_children to 1 before running tests.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Tue, 09 Feb 2016 23:01:51 -0800
+
+lxcfs (0.18-0ubuntu2) xenial; urgency=medium
+
+  * Merge upstream patches to place liblxcfs.so into lxcfs package
+    - drop liblxfs0 (luckily that was never published past -proposed)
+    - debian/rules: copy the built liblxcfs.so into /usr/lib/lxcfs
+  * Merge upstream fixes from w.bumiller.
+  * Add memory to the list of cgroups always granted to the user.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 08 Feb 2016 13:19:49 -0800
+
+lxcfs (0.18-0ubuntu1) xenial; urgency=medium
+
+  * Merge new upstream release
+  * Add liblxcfs0 package
+  * Add postinst code to send USR1 to lxcfs to ask it reload liblxcfs.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Sun, 07 Feb 2016 23:19:36 -0800
+
+lxcfs (0.17-0ubuntu3) xenial; urgency=medium
+
+  * Switch typos in prerm and README.Debian switching between cgfs and
+    cgm (LP: #1540058)
+  * Add dependency on systemd | cgroup-lite
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Sun, 31 Jan 2016 15:10:27 +0100
+
+lxcfs (0.17-0ubuntu2) xenial; urgency=medium
+
+  * Update tests to reflect new lxcfs proc virtualization behavior.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 28 Jan 2016 14:55:14 +0100
+
+lxcfs (0.17-0ubuntu1) xenial; urgency=medium
+
+  * Merge upstream release 0.17
+  * Add new libpam-cgfs package  (LP: #1538385)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Tue, 26 Jan 2016 18:40:55 -0800
+
+lxcfs (0.15-0ubuntu2) xenial; urgency=medium
+
+  * Cherrypick two upstream allocation bugfix patches.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 08 Jan 2016 12:47:18 -0800
+
+lxcfs (0.15-0ubuntu1) xenial; urgency=medium
+
+  * Merge new upstream release fixing memory allocation.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 07 Jan 2016 17:58:23 -0800
+
+lxcfs (0.14-0ubuntu1) xenial; urgency=medium
+
+  * Merge new upstream release.  Drop all patches (which were all cherrypicked
+    from upstream).
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 07 Jan 2016 16:03:40 -0800
+
+lxcfs (0.13-0ubuntu6) xenial; urgency=medium
+
+  * 0002-uptime-fix-pid1-and-reaper_busy-times.patch: fix uptime always
+    reading 0.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 17 Dec 2015 09:45:34 -0800
+
+lxcfs (0.13-0ubuntu5) xenial; urgency=medium
+
+  * d/tests/exercise: run debian/rules build before 'make tests'
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 07 Dec 2015 19:54:10 -0600
+
+lxcfs (0.13-0ubuntu4) xenial; urgency=medium
+
+  * Fix ftbfs due to testing:
+    - Add upstream patch to make main.sh work with lxcfs from package
+    - debian/tests/exercise: install pkgs needed to build tests
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Wed, 02 Dec 2015 21:04:57 -0600
+
+lxcfs (0.13-0ubuntu3) xenial; urgency=medium
+
+  * debian/tests/exercise: make tests, and run main.sh
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Tue, 01 Dec 2015 15:48:22 -0600
+
+lxcfs (0.13-0ubuntu2) xenial; urgency=medium
+
+  * debian/tests/exercise: Make test_confinement.sh executable
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 26 Nov 2015 13:08:01 -0600
+
+lxcfs (0.13-0ubuntu1) xenial; urgency=medium
+
+  * Merge new upstream release.  Drop all patches (which were all cherrypicked
+    from upstream).
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Wed, 25 Nov 2015 10:48:56 -0600
+
+lxcfs (0.12-0ubuntu5) xenial; urgency=medium
+
+  * prune init slice in caller_may_see_dir (LP: #1519079)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 23 Nov 2015 14:42:53 -0600
+
+lxcfs (0.12-0ubuntu4) xenial; urgency=medium
+
+  * 0002-get_task_reaper_pid-clean-up-forked-child to avoid defunct processes.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Sun, 22 Nov 2015 19:51:02 -0600
+
+lxcfs (0.12-0ubuntu3) xenial; urgency=medium
+
+  * 0001-work-around-weird-glibc-assert.patch (LP: #1518462)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 20 Nov 2015 15:18:32 -0600
+
+lxcfs (0.12-0ubuntu2) xenial; urgency=medium
+
+  * On upgrade, ask admin to reboot rather than restarting (LP: #1518117)
+  * lxcfs.service - do not wait for cgmanager to start.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 19 Nov 2015 17:15:14 -0600
+
+lxcfs (0.12-0ubuntu1) xenial; urgency=medium
+
+  * Merge new upstream release
+    - Includes fixes for CVE-2015-1342 and CVE-2015-1344
+      (LP: #1508481) (LP: ##1512854)
+     - Switches to using cgroup filesystem natively
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Tue, 17 Nov 2015 15:39:26 -0600
+
+lxcfs (0.11-0ubuntu3) xenial; urgency=medium
+
+  * Add a versioned dependency against cgmanager to allow easier
+    backporting to trusty.
+  * Bump Debian-Standards (no change required).
+  * Add a lintian override for XS-Testsuite
+    (field still needed to build the source on 14.04).
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Sun, 01 Nov 2015 11:47:06 -0500
+
+lxcfs (0.11-0ubuntu2) xenial; urgency=medium
+
+  * Set Delegate=yes in the systemd unit. Looks like that's needed to
+    get consistent cgroup behavior with systemd.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 28 Oct 2015 03:10:44 -0400
+
+lxcfs (0.11-0ubuntu1) xenial; urgency=medium
+
+  * New upstream release (0.11)
+    - Switch from libnih and libnih-dbus to glib and dbus-glib.
+    - lxcfs is now thread-safe and threading is now enabled by default.
+  * Patch libcgmanager-dev out of configure.ac (no longer needed).
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 27 Oct 2015 14:38:35 -0400
+
+lxcfs (0.10-0ubuntu1) wily; urgency=medium
+
+  * New upstream bugfix release:
+    - Detect libnih threading support and use when available.
+    - Fix threading issues related to DBus.
+    - Handle missing memory cgroup.
+    - Turn off threading globally because of problems with libdbus.
+    - Tweak lxcfs mounts to better accomodate systemd.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 03 Sep 2015 19:37:01 -0400
+
+lxcfs (0.9-0ubuntu3) wily; urgency=medium
+
+  * Update the lxc mount hook to offer a mount per co-mounted controller.
+    (LP: #1491557)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Wed, 02 Sep 2015 11:40:53 -0500
+
+lxcfs (0.9-0ubuntu1) wily; urgency=medium
+
+  * New upstream release avoiding fuse 'too many bytes' read errors
+  * Drop now-unneeded fuse arguments from the init scripts.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 08 May 2015 19:56:14 -0500
+
+lxcfs (0.8-0ubuntu1) wily; urgency=medium
+
+  * New upstream release.
+    - drop upstream patches
+    - fixes lxcfs.1 (LP: #1452578)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 07 May 2015 14:47:12 -0500
+
+lxcfs (0.7-0ubuntu4) vivid; urgency=medium
+
+  * Add some more sanity checks (LP: #1413405)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Mon, 20 Apr 2015 08:42:18 -0500
+
+lxcfs (0.7-0ubuntu3) vivid; urgency=medium
+
+  * 0002-Make-sure-that-that-cgroup-and-the-controller-are-se.patch: when
+    looking a controller under /cgroup, make sure that '/' separates them,
+    so that '/cgroup@freezer' is not a valid path.  (LP: #1413405)
+  * 0003-free-d-at-program-end.patch: free the lxcfs_state before exiting.
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Sun, 19 Apr 2015 08:44:06 -0500
+
+lxcfs (0.7-0ubuntu2) vivid; urgency=medium
+
+  * Cherry-pick a fix to the LXC hook.
+    - Fixes problems with checkpoint/restore due to double-mounting
+      /sys/fs/cgroup
+    - Respect the container's configuration by skipping lxcfs if
+      /sys/fs/cgroup isn't writable.
+    - Skip the cgmanager handling code as that was only applicable if we
+      were starting from a clean tmpfs.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 07 Apr 2015 16:21:01 -0400
+
+lxcfs (0.7-0ubuntu1) vivid; urgency=medium
+
+  * Upstream release 0.7, which has fixes for handling crashed children
+    and in particular for working around a glibc fork bug
+    (https://sourceware.org/bugzilla/show_bug.cgi?id=15392)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Fri, 03 Apr 2015 15:20:15 -0500
+
+lxcfs (0.6-0ubuntu3) vivid; urgency=medium
+
+  * Catch a nih_local which was not initialized to NULL (causing occasional
+    SEGVs)
+
+ -- Serge Hallyn <serge.hallyn@ubuntu.com>  Thu, 02 Apr 2015 20:31:29 -0500
+
+lxcfs (0.6-0ubuntu2) vivid; urgency=medium
+
+  * Cherry-pick testcase fix from upstream.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 16 Feb 2015 23:44:24 -0500
+
+lxcfs (0.6-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release (0.6):
+    - Fix cleanup for several function (missing close/free)
+    - Fix cpu-average in /proc/stat
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 16 Feb 2015 23:14:16 -0500
+
+lxcfs (0.5-0ubuntu3) vivid; urgency=medium
+
+  * Add the symlink check to the sysvinit script.
+  * Don't start lxcfs if /var/lib/lxcfs/proc exists as that typically
+    means we've had it bind-mounted from the host.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 12 Feb 2015 13:42:51 -0500
+
+lxcfs (0.5-0ubuntu2) vivid; urgency=medium
+
+  * debian/lxcfs.service: Drop seddery of /etc/mtab, which turns /etc/mtab
+    into a file. Under systemd, /etc/mtab is always a symlink to /proc/mounts.
+    (LP: #1419623)
+  * debian/lxcfs.upstart: Don't sed /etc/mtab if it is a symlink, to avoid
+    reverting it back to a file if it was changed to be a symlink.
+
+ -- Martin Pitt <martin.pitt@ubuntu.com>  Thu, 12 Feb 2015 10:41:57 +0100
+
+lxcfs (0.5-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release (0.5):
+    - Fix LXC hook to stop messing with /etc/mtab
+    - Fix LXC hook to succeed even if /proc and /sys aren't mounted
+    - Update configure.ac to properly detect the cgmanager version
+  * Update init scripts to properly cleanup on crashes.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 28 Jan 2015 17:09:11 +0100
+
+lxcfs (0.4-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release (0.4):
+    - Fix a critical bug where the host's /proc could be replaced by the
+      container's on systems where / is mounted rshared (default with systemd).
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 23 Jan 2015 13:54:25 -0500
+
+lxcfs (0.3-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release (0.3):
+    - Fix LXC configuration file location
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 21 Jan 2015 11:21:01 -0500
+
+lxcfs (0.2-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release (0.2):
+    - Add a LXC hook and config snippet
+    - Fix the testsuite
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 20 Jan 2015 15:17:21 -0500
+
+lxcfs (0.1-0ubuntu3) vivid; urgency=medium
+
+  * Fix the upstart and systemd init scripts. (LP: #1410666)
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 14 Jan 2015 10:29:28 -0500
+
+lxcfs (0.1-0ubuntu2) vivid; urgency=medium
+
+  * Add test dependency on lxc.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 13 Jan 2015 10:28:12 -0500
+
+lxcfs (0.1-0ubuntu1) vivid; urgency=low
+
+  * Initial release.
+  * Cherry-pick testsuite bugfix from upstream.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 12 Jan 2015 15:07:20 -0500

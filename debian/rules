@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+include /usr/share/dpkg/default.mk
+
+ifeq ($(DEB_VENDOR),Ubuntu)
+	LXCFS_DEPENDS="systemd | cgroup-lite | cgroupfs-mount"
+else
+	LXCFS_DEPENDS="systemd | cgroupfs-mount"
+endif
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@ --with autoreconf --with systemd
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/tmp/
+
+override_dh_install:
+	mkdir -p $(CURDIR)/debian/lxcfs/usr/lib/lxcfs
+	ln -s /usr/lib/${DEB_HOST_MULTIARCH}/lxcfs/liblxcfs.so $(CURDIR)/debian/lxcfs/usr/lib/lxcfs/
+	dh_install
+
+override_dh_installinit:
+ifeq (,$(findstring $(DEB_DISTRIBUTION), trusty xenial))
+	rm -f debian/tmp/etc/init/lxcfs.conf
+	echo 'rm_conffile /etc/init/lxcfs.conf 2.0.7-0ubuntu5~' >> debian/lxcfs.maintscript
+else
+	cp debian/tmp/etc/init/lxcfs.conf debian/lxcfs.upstart
+endif
+	cp debian/tmp/etc/rc.d/init.d/lxcfs debian/lxcfs.init
+	dh_installinit -p lxcfs --no-restart-on-upgrade
+
+override_dh_systemd_start:
+	dh_systemd_start -p lxcfs --no-restart-on-upgrade lxcfs.service
+
+override_dh_autoreconf:
+	[ -e m4 ] || mkdir m4
+	dh_autoreconf
+
+override_dh_gencontrol:
+	dh_gencontrol -- -Vlxcfs:Depends=$(LXCFS_DEPENDS)
+
+clean:
+	dh_autoreconf_clean
+	dh_clean

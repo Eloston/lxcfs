@@ -1,0 +1,2 @@
+# Required for backports
+lxcfs source: package-uses-old-debhelper-compat-version 10

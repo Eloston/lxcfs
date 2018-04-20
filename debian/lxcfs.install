@@ -1,0 +1,6 @@
+usr/bin
+usr/share/lxc/config/common.conf.d
+usr/share/lxcfs/*
+usr/share/man
+usr/lib/*/lxcfs/liblxcfs.so
+lib/systemd
