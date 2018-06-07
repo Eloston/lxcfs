@@ -10,7 +10,7 @@ set -eu
 # Constants
 _pkgsite='http://archive.ubuntu.com'
 pkgsite="${_pkgsite}/ubuntu"
-distro=bionic
+distro=cosmic
 pkgname=lxcfs
 pkgsection=main
 sources_xz_url="$pkgsite/dists/$distro/$pkgsection/source/Sources.xz"
