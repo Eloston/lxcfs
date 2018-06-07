@@ -15,7 +15,8 @@ pkgname=lxcfs
 pkgsection=main
 sources_xz_url="$pkgsite/dists/$distro/$pkgsection/source/Sources.xz"
 
-upstream_branch=upstream-ubuntu
+their_upstream_branch=stable-3.0
+our_upstream_branch=upstream-ubuntu
 our_branch=stretch-backports
 
 # Functions
@@ -37,7 +38,12 @@ fi
 # Abort if this isn't a git directory
 
 # We do this early to abort if there are uncommitted changes
-git checkout $upstream_branch
+# Also, update our_upstream_branch with new changes from their_upstream_branch
+git checkout $their_upstream_branch
+git remote add upstream https://github.com/lxc/lxcfs.git
+git pull upstream $their_upstream_branch
+git checkout $our_upstream_branch
+git merge $their_upstream_branch
 
 # Parse Sources.xz for package's debian.tar.xz
 pkg_info=$(curl "$sources_xz_url" | xz -d | grep_block "Package: $pkgname")
@@ -89,4 +95,4 @@ git commit --date="$(date --utc +%Y-%m-%dT%H:%M:%S%z)" -m "Import Debian directo
 
 # Switch back to our branch and begin merge
 git checkout $our_branch
-git merge $upstream_branch
+git merge $our_upstream_branch
