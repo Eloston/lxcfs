@@ -4,11 +4,11 @@
 
 set -eux
 
-pushd $(dirname $(readlink -f $0))/../../
+pushd $(git rev-parse --show-toplevel)
 
 trap popd SIGINT
 
-git checkout --ours -- debian/changelog
+git checkout --theirs -- debian/changelog
 TZ=Etc/UTC DEBFULLNAME=Eloston DEBEMAIL=eloston@programmer.net dch --bpo ''
 git add debian/changelog
 

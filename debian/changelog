@@ -1,14 +1,17 @@
-lxcfs (3.0.0-0ubuntu1~bpo9+2) stretch-backports; urgency=medium
+lxcfs (3.0.1-0ubuntu1~bpo9+1) stretch-backports; urgency=medium
 
   * Rebuild for stretch-backports.
 
- -- Eloston <eloston@programmer.net>  Thu, 07 Jun 2018 16:33:27 +0000
+ -- Eloston <eloston@programmer.net>  Thu, 07 Jun 2018 17:26:26 +0000
 
-lxcfs (3.0.0-0ubuntu1~bpo9+1) stretch-backports; urgency=medium
+lxcfs (3.0.1-0ubuntu1) cosmic; urgency=medium
 
-  * Rebuild for stretch-backports.
+  * New upstream bugfix release:
+    - Add support for the nonempty FUSE mount option
+  * Update to new standard (4.1.4)
+    - Remove deprecated VCS URLs
 
- -- Eloston <eloston@programmer.net>  Fri, 20 Apr 2018 18:49:53 +0000
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 05 Jun 2018 15:56:09 -0400
 
 lxcfs (3.0.0-0ubuntu1) bionic; urgency=medium
 
