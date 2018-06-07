@@ -6,6 +6,9 @@ set -eu
 
 . $(dirname $(readlink -f $0))/constants.sh
 
+# Go to root of repo to prevent issue of directories disappearing
+cd $(git rev-parse --show-toplevel)
+
 git checkout $their_upstream_branch
 git remote add upstream https://github.com/lxc/lxcfs.git || true
 git pull upstream $their_upstream_branch
