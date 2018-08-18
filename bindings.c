@@ -378,19 +378,24 @@ static bool write_string(const char *fnam, const char *string, int fd)
 	FILE *f;
 	size_t len, ret;
 
-	if (!(f = fdopen(fd, "w")))
+	f = fdopen(fd, "w");
+	if (!f)
 		return false;
+
 	len = strlen(string);
 	ret = fwrite(string, 1, len, f);
 	if (ret != len) {
-		lxcfs_error("Error writing to file: %s\n", strerror(errno));
+		lxcfs_error("%s - Error writing \"%s\" to \"%s\"\n",
+			    strerror(errno), string, fnam);
 		fclose(f);
 		return false;
 	}
+
 	if (fclose(f) < 0) {
-		lxcfs_error("Error writing to file: %s\n", strerror(errno));
+		lxcfs_error("%s - Failed to close \"%s\"\n", strerror(errno), fnam);
 		return false;
 	}
+
 	return true;
 }
 
@@ -2956,7 +2961,7 @@ static bool startswith(const char *line, const char *pref)
 static void parse_memstat(char *memstat, unsigned long *cached,
 		unsigned long *active_anon, unsigned long *inactive_anon,
 		unsigned long *active_file, unsigned long *inactive_file,
-		unsigned long *unevictable)
+		unsigned long *unevictable, unsigned long *shmem)
 {
 	char *eol;
 
@@ -2979,6 +2984,9 @@ static void parse_memstat(char *memstat, unsigned long *cached,
 		} else if (startswith(memstat, "total_unevictable")) {
 			sscanf(memstat + 17, "%lu", unevictable);
 			*unevictable /= 1024;
+		} else if (startswith(memstat, "total_shmem")) {
+			sscanf(memstat + 11, "%lu", shmem);
+			*shmem /= 1024;
 		}
 		eol = strchr(memstat, '\n');
 		if (!eol)
@@ -3095,7 +3103,7 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
 		*memswlimit_str = NULL, *memswusage_str = NULL;
 	unsigned long memlimit = 0, memusage = 0, memswlimit = 0, memswusage = 0,
 		cached = 0, hosttotal = 0, active_anon = 0, inactive_anon = 0,
-		active_file = 0, inactive_file = 0, unevictable = 0,
+		active_file = 0, inactive_file = 0, unevictable = 0, shmem = 0,
 		hostswtotal = 0;
 	char *line = NULL;
 	size_t linelen = 0, total_len = 0, rv = 0;
@@ -3146,7 +3154,7 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
 
 	parse_memstat(memstat_str, &cached, &active_anon,
 			&inactive_anon, &active_file, &inactive_file,
-			&unevictable);
+			&unevictable, &shmem);
 
 	f = fopen("/proc/meminfo", "r");
 	if (!f)
@@ -3221,6 +3229,15 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
 			printme = lbuf;
 		} else if (startswith(line, "SUnreclaim")) {
 			snprintf(lbuf, 100, "SUnreclaim:     %8lu kB\n", 0UL);
+			printme = lbuf;
+		} else if (startswith(line, "Shmem:")) {
+			snprintf(lbuf, 100, "Shmem:          %8lu kB\n", shmem);
+			printme = lbuf;
+		} else if (startswith(line, "ShmemHugePages")) {
+			snprintf(lbuf, 100, "ShmemHugePages: %8lu kB\n", 0UL);
+			printme = lbuf;
+		} else if (startswith(line, "ShmemPmdMapped")) {
+			snprintf(lbuf, 100, "ShmemPmdMapped: %8lu kB\n", 0UL);
 			printme = lbuf;
 		} else
 			printme = line;
