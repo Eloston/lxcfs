@@ -1,8 +1,14 @@
-lxcfs (3.0.1-0ubuntu1~bpo9+1) stretch-backports; urgency=medium
+lxcfs (3.0.1-0ubuntu2~bpo9+1) stretch-backports; urgency=medium
 
   * Rebuild for stretch-backports.
 
- -- Eloston <eloston@programmer.net>  Thu, 07 Jun 2018 17:26:26 +0000
+ -- Eloston <eloston@programmer.net>  Sat, 18 Aug 2018 19:37:31 +0000
+
+lxcfs (3.0.1-0ubuntu2) cosmic; urgency=medium
+
+  * debian/rules: Update dh_systemd calls to prevent any service restart.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Sat, 16 Jun 2018 18:13:41 -0400
 
 lxcfs (3.0.1-0ubuntu1) cosmic; urgency=medium
 

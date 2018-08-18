@@ -28,10 +28,10 @@ override_dh_installinit:
 	rm -f debian/tmp/etc/init/lxcfs.conf
 	echo 'rm_conffile /etc/init/lxcfs.conf 1:2.0.7' >> debian/lxcfs.maintscript
 	cp debian/tmp/etc/rc.d/init.d/lxcfs debian/lxcfs.init
-	dh_installinit -p lxcfs --no-restart-on-upgrade
+	dh_installinit -p lxcfs --no-restart-on-upgrade --no-restart-after-upgrade
 
 override_dh_systemd_start:
-	dh_systemd_start -p lxcfs --no-restart-on-upgrade lxcfs.service
+	dh_systemd_start -p lxcfs --no-restart-on-upgrade --no-restart-after-upgrade lxcfs.service
 
 override_dh_autoreconf:
 	[ -e m4 ] || mkdir m4
