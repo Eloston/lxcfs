@@ -1,8 +1,20 @@
-lxcfs (3.0.1-0ubuntu2~bpo9+1) stretch-backports; urgency=medium
+lxcfs (3.0.2-0ubuntu1~bpo9+1) stretch-backports; urgency=medium
 
   * Rebuild for stretch-backports.
 
- -- Eloston <eloston@programmer.net>  Sat, 18 Aug 2018 19:37:31 +0000
+ -- Eloston <eloston@programmer.net>  Tue, 11 Sep 2018 23:35:49 +0000
+
+lxcfs (3.0.2-0ubuntu1) cosmic; urgency=medium
+
+  * New upstream bugfix release (LP: #1788232):
+    - travis: add coverity support
+    - travis: fix .travis.yml
+    - meminfo: read shmem from cgroup parameter memory.stat
+    - meminfo: set ShmemHugePages and ShmemPmdMapped to zero
+    - bindings: better logging for write_string()
+  * Update to new standard (4.2.0)
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 21 Aug 2018 11:44:01 -0400
 
 lxcfs (3.0.1-0ubuntu2) cosmic; urgency=medium
 
