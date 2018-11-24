@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 10),
                libfuse-dev,
                linux-libc-dev,
                pkg-config
-Standards-Version: 4.2.0
+Standards-Version: 4.2.1
 Homepage: https://linuxcontainers.org
 
 Package: lxcfs

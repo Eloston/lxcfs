@@ -1,3 +1,12 @@
+lxcfs (3.0.3-0ubuntu1) disco; urgency=medium
+
+  * New upstream bugfix release (LP: #1804753):
+    - bindings: prevent double free
+    - tests: include missing sys/sysmacros.h header
+  * Update to new standard (4.2.1)
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 22 Nov 2018 23:17:19 -0500
+
 lxcfs (3.0.2-0ubuntu1) cosmic; urgency=medium
 
   * New upstream bugfix release (LP: #1788232):
