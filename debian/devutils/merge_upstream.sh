@@ -10,9 +10,9 @@ set -eu
 # Constants
 _pkgsite='http://archive.ubuntu.com'
 pkgsite="${_pkgsite}/ubuntu"
-distro=cosmic
+distro=disco
 pkgname=lxcfs
-pkgsection=main
+pkgsection=universe
 sources_xz_url="$pkgsite/dists/$distro/$pkgsection/source/Sources.xz"
 
 . $(dirname $(readlink -f $0))/constants.sh
